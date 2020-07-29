@@ -115,10 +115,10 @@ const SHOP_DATA = {
       }
     ]
   },
-  womens:{
+  jackets:{
     id: 3,
     title: 'Jackets',
-    routeName: 'womens',
+    routeName: 'jackets',
     items: [
       {
         id: 18,
