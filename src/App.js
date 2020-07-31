@@ -7,12 +7,10 @@ import "./App.css";
 import Header from "./components/header/header.component";
 import { auth, createUserProfileDocument, addCollectionAndDocuments } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
-import { setCurrentUser } from "./redux/user/user.actions";
+import { setCurrentUser, checkUserSession } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
 import CheckoutPage from "./page/checkout/checkout.component";
-import { selectCollectionsForPreview } from "./redux/shop/shop.selectors";
-
 
 
 class App extends React.Component {
@@ -20,24 +18,27 @@ class App extends React.Component {
 
   componentDidMount() {
 
-    const { setCurrentUser, collectionsArray } = this.props;
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    const { checkUserSession} = this.props;
+    checkUserSession();
+    //const { setCurrentUser } = this.props;
 
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-        });
-      } else {
-        setCurrentUser(userAuth);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   if (userAuth) {
+    //     const userRef = await createUserProfileDocument(userAuth);
+
+    //     userRef.onSnapshot(snapShot => {
+    //       setCurrentUser({
+    //         id: snapShot.id,
+    //         ...snapShot.data()
+    //       });
+    //     });
+    //   } else {
+    //     setCurrentUser(userAuth);
 
         
-      }
-    });
+    //   }
+   // });
   }
 
 
@@ -72,7 +73,6 @@ class App extends React.Component {
 
 const mapStatetoProps = createStructuredSelector({
   currentUser: selectCurrentUser,
- 
 
 }
 );
@@ -80,7 +80,8 @@ const mapStatetoProps = createStructuredSelector({
 const mapDispatchtoProps = dispatch => 
 {
   return {
-    setCurrentUser: (user) => dispatch(setCurrentUser(user))
+   // setCurrentUser: (user) => dispatch(setCurrentUser(user))
+   checkUserSession: ()=> dispatch(checkUserSession())
   }
 };
 
