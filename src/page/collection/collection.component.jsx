@@ -1,14 +1,13 @@
 import  React  from 'react';
 
 
-import { Route } from 'react-router-dom'
 
 import './collection.styles.scss'
 import { connect } from 'react-redux';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 import CollectionItem from '../../components/collection-item/collection-item.component';
 
-const CollectionPage = ({match, collection})=>{
+const CollectionPage = ({ collection})=>{
 
 const {title, items} = collection;
   return (
